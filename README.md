@@ -3,7 +3,7 @@ This project aims at creating a simple bootstrap for Mongo Read/Write queries
 
 # Preview
 
-![Preview](https://github.com/vishwarajanand/DotCollector/blob/master/preview.png?raw=true "Preview")
+![Preview](https://github.com/vishwarajanand/DotCollector/blob/master/demos/preview.png?raw=true "Preview")
 
 # Credits
 
