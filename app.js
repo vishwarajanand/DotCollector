@@ -1,10 +1,16 @@
 const Express = require("express");
 const BodyParser = require("body-parser");
 const FeedbackStore = require("./crud.js");
+const path = require("path");
 
 var app = Express();
+app.use(Express.static('public'));
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 app.post("/add_feedback", async (request, response) => {
     let cb = function (added_feedback) {
@@ -28,7 +34,7 @@ app.get("/get_feedbacks/", async (req, response) => {
     await FeedbackStore.get_feedbacks(cb, lookback_seconds, limit);
 });
 
-app.listen(4000, () => {
+app.listen(process.env.port || 4000, () => {
     // MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
     //     if (error) {
     //         throw error;
