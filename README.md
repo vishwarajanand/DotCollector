@@ -1,6 +1,10 @@
 # DotCollector
 This project aims at creating a simple bootstrap for Mongo Read/Write queries
 
+# Preview
+
+![Preview](https://github.com/vishwarajanand/DotCollector/blob/master/preview.png?raw=true "Preview")
+
 # Credits
 
 1. Mongo APIs:
