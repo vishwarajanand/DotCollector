@@ -4,12 +4,52 @@
 <head>
     <meta charset="UTF-8" />
     <title>Dot Collector</title>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            display: grid;
+            height: 10vh;
+            place-items: center;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 32px;
+            margin: 6px 4px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .btn-start {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+
+        .btn-start:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .base-box {
+            position: relative;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
 
     <h2>Perform easy Read/Writes to Mongo!</h2>
-    <p>This page renders data using React in a script tag!</p>
+    <p>This page renders data using React in a script tag without using JSX!</p>
 
     <!-- We will put our React components inside this div. -->
     <div id="main_container"></div>
