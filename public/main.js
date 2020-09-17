@@ -30,8 +30,8 @@ class DotRow extends React.Component {
 
     render() {
         const Dot = this.props;
-        const body = React.createElement('td', null, `${JSON.stringify(Dot.body)}`);
-        const ts = React.createElement('td', null, `${this.timeSince(new Date(Dot.timestamp))}`);
+        const body = React.createElement('td', { className: 'td' }, `${JSON.stringify(Dot.body)}`);
+        const ts = React.createElement('td', { className: 'td' }, `${this.timeSince(new Date(Dot.timestamp))}`);
 
         return React.createElement('tr', null, ts, body);
     }
@@ -49,11 +49,11 @@ class DotTable extends React.Component {
                 React.createElement(DotRow, props));
         });
 
-        return React.createElement('table', null,
+        return React.createElement('table', { className: 'table' },
             React.createElement('thead', null,
                 React.createElement('tr', null,
-                    React.createElement('th', null, `Timestamp`),
-                    React.createElement('th', null, `Dot`))),
+                    React.createElement('th', { className: 'th' }, `Timestamp`),
+                    React.createElement('th', { className: 'th' }, `Dots`))),
             React.createElement('tbody', null,
                 rows
             ),
@@ -91,6 +91,7 @@ class DotTable extends React.Component {
 //     }
 // }
 
+//TODO: add settings here!!
 class AddDots extends React.Component {
     constructor(props) {
         super(props);
