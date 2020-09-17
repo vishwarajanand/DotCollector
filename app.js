@@ -15,9 +15,9 @@ app.get('/', function (req, res) {
 app.post("/add_feedback", async (request, response) => {
     let cb = function (added_feedback) {
         if (added_feedback <= 0) {
-            return response.status(500).send("FAILED");
+            return response.status(500).send({ status: "FAILURE" });
         }
-        response.send("DONE");
+        response.send({ status: "SUCCESS" });
     };
     await FeedbackStore.add_feedback(request.body, cb);
 });
