@@ -100,8 +100,8 @@ class Setting extends React.Component {
             val.target.value <= this.state.configs.MAX_LIMIT
         ) {
             this.setState({
-                value: val.target.value,
-                [`${this.state.name}`]: val.target.value
+                value: +(val.target.value),
+                [`${this.state.name}`]: +(val.target.value)
             });
             // console.log("Setting value updated!");
         }
@@ -110,6 +110,12 @@ class Setting extends React.Component {
             console.log("Default setting applied!");
         }
 
+        if (!val || val.type !== "mouseup") {
+            console.log(`Not matched: ${val.type}`);
+            return;
+        }
+
+        console.log("Mouseup matched, continue with callback!");
         this.callback({
             settings: {
                 [`${this.state.name}`]: this.state.value
@@ -127,6 +133,7 @@ class Setting extends React.Component {
                 max: this.state.configs.MAX_LIMIT,
                 step: this.state.configs.STEP,
                 onChange: this.update.bind(this),
+                onMouseUp: this.update.bind(this),
                 value: this.state.value
             }
         );
@@ -159,7 +166,7 @@ class Settings extends React.Component {
                     [`${val.name}`]: val.value
                 }
             });
-            console.log("Setting value updated!");
+            // console.log("Setting value updated!");
         }
         else {
             console.log("Invalid setting passed!");
@@ -200,7 +207,6 @@ class Settings extends React.Component {
     }
 }
 
-//TODO: add settings here!!
 class AddDots extends React.Component {
     constructor(props) {
         super(props);
@@ -240,7 +246,7 @@ class AddDots extends React.Component {
                 console.error('There was an error!', error);
             }).finally(() => {
                 this.setState({ body: '' })
-                this.callback(this.state.value);
+                this.callback(this.state.settings);
             });
     }
 
@@ -257,12 +263,24 @@ class AddDots extends React.Component {
     }
 
     saveSettings(val) {
-        // console.log(JSON.stringify(val));
-        if (val && val.target && val.target.value !== undefined) {
-            console.log(`Settings saved in AddDots! : ${val.target.value}`);
-        } else {
-            // console.log("invalid val in save setings");
+        console.log(JSON.stringify(val));
+        let settings = { ...this.state.settings };
+        if (val && val.lookback_seconds) {
+            settings.lookback_seconds = val.lookback_seconds;
         }
+        if (val && val.limit) {
+            settings.limit = val.limit;
+        }
+
+        this.setState({
+            settings:
+            {
+                ...settings,
+            }
+        });
+
+        this.setState({ settings: settings });
+        this.callback(val);
     }
 
     componentDidMount() {
@@ -309,12 +327,18 @@ class MainApp extends React.Component {
         this.state = { dots: [] };
     }
 
-    fetch() {
-        this.componentDidMount();
+    fetch(val) {
+        let limit = 100;
+        let lookback_seconds = 100;
+        if (val && val.limit && val.lookback_seconds) {
+            limit = val.limit;
+            lookback_seconds = val.lookback_seconds;
+        }
+        this.componentDidMount(limit, lookback_seconds);
     }
 
-    componentDidMount() {
-        fetch('/get_feedbacks')
+    componentDidMount(limit = 100, lookback_seconds = 100) {
+        fetch(`/get_feedbacks?limit=${limit}&lookback_seconds=${lookback_seconds}`)
             .then(res => {
                 console.log(res);
                 return res.json()
