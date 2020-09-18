@@ -24,9 +24,9 @@ app.post("/add_feedback", async (request, response) => {
 
 app.get("/get_feedbacks/", async (req, response) => {
     let lookback_seconds = +(req.query.lookback_seconds);
-    lookback_seconds = (lookback_seconds === undefined || lookback_seconds <= 0) ? 100 : req.query.lookback_seconds;
+    lookback_seconds = (lookback_seconds === undefined || lookback_seconds <= 0) ? 100 : lookback_seconds;
     let limit = +(req.query.limit);
-    limit = (limit === undefined || limit <= 0) ? 100 : req.query.limit;
+    limit = (limit === undefined || limit <= 0) ? 100 : limit;
 
     let cb = function (feedbacks) {
         response.send(feedbacks);
