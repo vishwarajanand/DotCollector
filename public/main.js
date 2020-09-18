@@ -42,8 +42,8 @@ class DotTable extends React.Component {
     componentDidMount() {
         this.interval = setInterval(
             () => {
-                // Update the DotTable component every 30s
-                this.setState({ time: Date.now() }), 30000
+                // Update the DotTable component every 1s
+                this.setState({ time: Date.now() }), 1000
             });
     }
 
