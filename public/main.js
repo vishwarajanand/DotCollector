@@ -74,35 +74,131 @@ class DotTable extends React.Component {
     }
 }
 
-// class Setting extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { value: 100 };
-//         this.updateCounter = this.updateCounter.bind(this);
-//     }
+class Setting extends React.Component {
 
-//     updateCounter(val) {
-//         this.setState({ value: val });
-//     }
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 100,
+            name: this.props.name,
+            configs:
+            {
+                STEP: 1,
+                MIN_LIMIT: 1,
+                MAX_LIMIT: 10000
+            }
+        };
+        this.callback = this.props.callback;
+    }
 
-//     render() {
-//         return e('div', null, e('input', { type: 'range', min: 5, max: 10000, onClick: this.props.updateCounter(this.value), value: this.state.value }, null));
-//     }
-// }
+    update(val) {
+        if (
+            val &&
+            val.target &&
+            val.target.value !== undefined &&
+            val.target.value >= this.state.configs.MIN_LIMIT &&
+            val.target.value <= this.state.configs.MAX_LIMIT
+        ) {
+            this.setState({
+                value: val.target.value,
+                [`${this.state.name}`]: val.target.value
+            });
+            // console.log("Setting value updated!");
+        }
+        else {
+            this.setState({ value: 100 });
+            console.log("Default setting applied!");
+        }
 
-// class Settings extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { limit: 100, lookback_seconds: 100 };
-//     }
+        this.callback({
+            settings: {
+                [`${this.state.name}`]: this.state.value
+            },
+            name: this.state.name,
+            value: this.state.value
+        });
+    }
 
-//     render() {
-//         return e('div',
-//             null,
-//             e(Setting, { value: limit }, null),
-//             e(Setting, { value: lookback_seconds }, null));
-//     }
-// }
+    render() {
+        return e('input',
+            {
+                type: 'range',
+                min: this.state.configs.MIN_LIMIT,
+                max: this.state.configs.MAX_LIMIT,
+                step: this.state.configs.STEP,
+                onChange: this.update.bind(this),
+                value: this.state.value
+            }
+        );
+    }
+}
+
+class Settings extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            settings:
+            {
+                limit: 100,
+                lookback_seconds: 100
+            }
+        };
+        this.callback = this.props.saveSettings;
+    }
+
+    update(val) {
+        if (
+            val &&
+            val.name &&
+            val.value
+        ) {
+            this.setState({
+                settings:
+                {
+                    ...this.state.settings,
+                    [`${val.name}`]: val.value
+                }
+            });
+            console.log("Setting value updated!");
+        }
+        else {
+            console.log("Invalid setting passed!");
+        }
+
+        this.callback(this.state.settings);
+    }
+
+    render() {
+        return e('div',
+            null,
+            e('p',
+                null,
+                'Max Dots to Pull',
+                e('br'),
+                e(Setting,
+                    {
+                        name: 'limit',
+                        value: this.state.settings.limit,
+                        callback: this.update.bind(this)
+                    },
+                )
+            ),
+            e('p',
+                null,
+                'Lookback Time in Seconds',
+                e('br'),
+                e(Setting,
+                    {
+                        name: 'lookback_seconds',
+                        value: this.state.settings.lookback_seconds,
+                        callback: this.update.bind(this)
+                    },
+                )
+            ),
+            e('br'),
+        );
+    }
+}
 
 //TODO: add settings here!!
 class AddDots extends React.Component {
@@ -160,23 +256,49 @@ class AddDots extends React.Component {
         }
     }
 
+    saveSettings(val) {
+        // console.log(JSON.stringify(val));
+        if (val && val.target && val.target.value !== undefined) {
+            console.log(`Settings saved in AddDots! : ${val.target.value}`);
+        } else {
+            // console.log("invalid val in save setings");
+        }
+    }
+
     componentDidMount() {
     }
 
     render() {
         return e('div',
             null,
-            e('textarea',
-                {
-                    value: this.state.body,
-                    onChange: this.changeBody.bind(this),
-                    // defaultValue: '',
-                    className: 'base-box',
-                    placeholder: 'Add some text to add into Mongo as dots!'
-                }),
-            e('input',
-                { type: 'button', onClick: this.send.bind(this), value: 'Submit', className: 'button btn-start' },
-                null)
+            e('div',
+                null,
+                e('textarea',
+                    {
+                        value: this.state.body,
+                        onChange: this.changeBody.bind(this),
+                        // defaultValue: '',
+                        className: 'base-box',
+                        placeholder: 'Add some text to add into Mongo as dots!'
+                    }),
+                // e('br'),
+                e('input',
+                    {
+                        type: 'button',
+                        onClick: this.send.bind(this),
+                        value: 'Submit',
+                        className: 'button btn-start'
+                    },
+                    null)
+            ), e('div',
+                null,
+                e(Settings,
+                    {
+                        saveSettings: this.saveSettings.bind(this)
+                    },
+                    null
+                )
+            )
         );
     }
 }
