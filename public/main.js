@@ -142,6 +142,7 @@ class AddDots extends React.Component {
             console.log("Body value updated!");
         }
         else {
+            this.setState({ body: '' });
             console.log("Invalid body value!");
         }
     }
@@ -157,7 +158,8 @@ class AddDots extends React.Component {
                     value: this.state.body,
                     onChange: this.changeBody.bind(this),
                     // defaultValue: '',
-                    className: 'base-box'
+                    className: 'base-box',
+                    placeholder: 'Add some text to add into Mongo as dots!'
                 }),
             e('input',
                 { type: 'button', onClick: this.send.bind(this), value: 'Submit', className: 'button btn-start' },
