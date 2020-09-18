@@ -191,11 +191,19 @@ class MainApp extends React.Component {
 
     render() {
         if (this.state.dots.length <= 0) {
-            return e(
-                'button',
-                { onClick: () => this.fetch() },
-                'Refresh'
-            );
+            return e('div', null,
+                e(
+                    AddDots,
+                    {
+                        updateData: this.fetch.bind(this)
+                    }
+                ),
+                e('br'),
+                e(
+                    'button',
+                    { onClick: () => this.fetch() },
+                    'Refresh',
+                ));
         }
 
         return e('div',
