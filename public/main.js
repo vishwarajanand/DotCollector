@@ -38,6 +38,19 @@ class DotRow extends React.Component {
 }
 
 class DotTable extends React.Component {
+
+    componentDidMount() {
+        this.interval = setInterval(
+            () => {
+                // Update the DotTable component every 30s
+                this.setState({ time: Date.now() }), 30000
+            });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
     render() {
         const rows = [];
 
