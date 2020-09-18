@@ -1,10 +1,8 @@
 const MongoClient = require("mongodb").MongoClient;
 
-const CONNECTION_URL = "mongodb+srv://dot-collector:dot-collector@dot-collector.gr3ic.mongodb.net/dot-collector?retryWrites=true&w=majority";
-const DATABASE_NAME = "dot-collector";
-const COLLECTION_NAME = "dot-collector";
+const secrets = require("./secrets.js");
 
-let client = new MongoClient(CONNECTION_URL);
+let client = new MongoClient(secrets.CONNECTION_URL);
 let database, collection;
 let initiatialized = false;
 
@@ -12,10 +10,10 @@ async function init_mongo(retries_left = 3) {
     if (initiatialized) return;
     if (retries_left <= 0) return;
     try {
-        client = new MongoClient(CONNECTION_URL);
+        client = new MongoClient(secrets.CONNECTION_URL);
         await client.connect();
-        database = client.db(DATABASE_NAME);
-        collection = database.collection(COLLECTION_NAME);
+        database = client.db(secrets.DATABASE_NAME);
+        collection = database.collection(secrets.COLLECTION_NAME);
         initiatialized = true;
         console.log(" !! Mongo Initialized SUCCESSFUL !! ");
     } catch (e) {
