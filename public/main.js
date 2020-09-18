@@ -30,10 +30,10 @@ class DotRow extends React.Component {
 
     render() {
         const Dot = this.props;
-        const body = React.createElement('td', { className: 'td' }, `${JSON.stringify(Dot.body)}`);
-        const ts = React.createElement('td', { className: 'td' }, `${this.timeSince(new Date(Dot.timestamp))}`);
+        const body = e('td', { className: 'td' }, `${JSON.stringify(Dot.body)}`);
+        const ts = e('td', { className: 'td' }, `${this.timeSince(new Date(Dot.timestamp))}`);
 
-        return React.createElement('tr', null, ts, body);
+        return e('tr', null, ts, body);
     }
 }
 
@@ -46,15 +46,15 @@ class DotTable extends React.Component {
             const props = Dot;
             props.key = Dot._id;
             rows.push(
-                React.createElement(DotRow, props));
+                e(DotRow, props));
         });
 
-        return React.createElement('table', { className: 'table' },
-            React.createElement('thead', null,
-                React.createElement('tr', null,
-                    React.createElement('th', { className: 'th' }, `Timestamp`),
-                    React.createElement('th', { className: 'th' }, `Dots`))),
-            React.createElement('tbody', null,
+        return e('table', { className: 'table' },
+            e('thead', null,
+                e('tr', null,
+                    e('th', { className: 'th' }, `Timestamp`),
+                    e('th', { className: 'th' }, `Dots`))),
+            e('tbody', null,
                 rows
             ),
         );
@@ -73,7 +73,7 @@ class DotTable extends React.Component {
 //     }
 
 //     render() {
-//         return React.createElement('div', null, React.createElement('input', { type: 'range', min: 5, max: 10000, onClick: this.props.updateCounter(this.value), value: this.state.value }, null));
+//         return e('div', null, e('input', { type: 'range', min: 5, max: 10000, onClick: this.props.updateCounter(this.value), value: this.state.value }, null));
 //     }
 // }
 
@@ -84,10 +84,10 @@ class DotTable extends React.Component {
 //     }
 
 //     render() {
-//         return React.createElement('div',
+//         return e('div',
 //             null,
-//             React.createElement(Setting, { value: limit }, null),
-//             React.createElement(Setting, { value: lookback_seconds }, null));
+//             e(Setting, { value: limit }, null),
+//             e(Setting, { value: lookback_seconds }, null));
 //     }
 // }
 
@@ -150,16 +150,16 @@ class AddDots extends React.Component {
     }
 
     render() {
-        return React.createElement('div',
+        return e('div',
             null,
-            React.createElement('textarea',
+            e('textarea',
                 {
                     value: this.state.body,
                     onChange: this.changeBody.bind(this),
                     // defaultValue: '',
                     className: 'base-box'
                 }),
-            React.createElement('input',
+            e('input',
                 { type: 'button', onClick: this.send.bind(this), value: 'Submit', className: 'button btn-start' },
                 null)
         );
@@ -198,12 +198,12 @@ class MainApp extends React.Component {
             );
         }
 
-        return React.createElement('div',
+        return e('div',
             null,
-            React.createElement(AddDots,
+            e(AddDots,
                 { updateData: this.fetch.bind(this) }),
-            React.createElement('br'),
-            React.createElement(DotTable, { Dots: this.state.dots })
+            e('br'),
+            e(DotTable, { Dots: this.state.dots })
         );
     }
 }
