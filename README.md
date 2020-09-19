@@ -11,6 +11,8 @@ This is an amazingly simple yet massively scalable system! That opens opportunit
 4. Conduct live short-time surveys
 5. Endless more opportunities!
 
+> Blog is published [here](https://vishwarajanand.com/business/released-dot-collector/).
+
 ## Demo Video
 
 [![Watch on YouTube](https://img.youtube.com/vi/41fpw9t4aL8/hqdefault.jpg)](https://youtu.be/41fpw9t4aL8)
@@ -45,3 +47,5 @@ Data is stored at cloud.mongodb.com:
 http://mongodb.github.io/node-mongodb-native/3.5/api/Collection.html
 
 2. Free version of Mongo Atlas: https://cloud.mongodb.com/
+
+
