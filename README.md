@@ -3,7 +3,7 @@
 Dots (conceptually a text for now) can be sent by a web client and a central server can pull the dots for processing or show insights to end-users.
 This project aims at creating a simple bootstrap for Read/Write queries based on a Mongo powered Cloud NoSQL Backend, React (without JSX), Express, NodeJS.
 
-This is an amazingly simple yet massively scalable system! That opens opportunities for the following sample applications:
+Think of it as an amazingly simple yet massively scalable system! That opens opportunities for the following sample applications:
 
 1. Acknowledging digital-ads fueled transactions on browsers
 2. IoT based data collection to analyze device health
