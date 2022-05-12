@@ -11,7 +11,7 @@ Think of it as an amazingly simple yet massively scalable system! That opens opp
 4. Conduct live short-time surveys
 5. Endless more opportunities!
 
-> Blog is published [here](https://vishwarajanand.com/business/released-dot-collector/).
+> Blog is published [here](https://vishwarajanand.com/tech/released-dot-collector/).
 
 ## Demo Video
 
